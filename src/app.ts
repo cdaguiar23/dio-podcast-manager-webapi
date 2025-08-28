@@ -1,4 +1,7 @@
-import { getFilterEpisodes, getListEpisodes } from "./controllers/podcasts-controller";
+import { getFilterEpisodes, getListEpisodes, getPodcastDetails } from "./controllers/podcasts-controller";
+import { createPodcast } from "./controllers/create-podcast-controller";
+import { updatePodcast } from "./controllers/update-podcast-controller";
+import { deletePodcast } from "./controllers/delete-podcast-controller";
 import { Routes } from './routes/routes';
 import { HttpMethod } from './utils/http-methods';
 import * as http from 'http'
@@ -13,5 +16,13 @@ export const app = async (request: http.IncomingMessage, response: http.ServerRe
         await getListEpisodes(request, response)
     } else if (request.method === HttpMethod.GET && baseUrl === Routes.EPISODE) { 
         await getFilterEpisodes(request, response)
-    } 
+    } else if (request.method === HttpMethod.GET && baseUrl?.startsWith(Routes.PODCAST_DETAILS)) { 
+        await getPodcastDetails(request, response)
+    } else if (request.method === HttpMethod.POST && baseUrl === Routes.CREATE) {
+        await createPodcast(request, response)
+    } else if (request.method === HttpMethod.PUT && baseUrl?.startsWith(Routes.PODCAST_UPDATE)) {
+        await updatePodcast(request, response)
+    } else if (request.method === HttpMethod.DELETE && baseUrl?.startsWith(Routes.PODCAST_DELETE)) {
+        await deletePodcast(request, response)
+    }
 }
