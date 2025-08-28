@@ -1,24 +1,24 @@
 {
-  "name": "node-express-web-ts",
+  "name": "dio-podcast-manager",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "nodemon --watch --ext 'ts,json' --exec 'npm run build && npm run start'",
-    "build": "tsc && cp -r views dist",
-    "start": "node dist/index.js"
+    "start:dev": "tsx --env-file=.env src/server.ts",
+    "start:watch": "tsx watch --env-file=.env src/server.ts",
+    "dist": "tsup src",
+    "start:dist": "npm run dist && --env-file=.env node/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "description": "",
   "dependencies": {
-    "ejs": "^3.1.9",
-    "express": "^4.21.2"
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
   },
   "devDependencies": {
-    "@types/express": "^4.17.21",
-    "typescript": "^5.3.2",
-    "@types/node": "^20.10.0",
-    "nodemon": "^3.0.1"
+    "@types/node": "^24.3.0"
   }
 }
