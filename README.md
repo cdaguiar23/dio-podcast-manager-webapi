@@ -96,4 +96,3 @@ A API possui os seguintes endpoints:
   Se nenhum podcast for encontrado, a API retornará uma resposta vazia com o status `204`.
 
 ---
-*Este README foi gerado com o auxílio do Gemini AI.*
