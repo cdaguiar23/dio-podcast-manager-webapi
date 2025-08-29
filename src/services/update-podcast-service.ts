@@ -1,8 +1,8 @@
 import { PodcastModel } from "../models/podcast-module";
-import { repositoryUpdatePodcast } from "../repositories/podcasts-repositories";
+import { repositoryUpdatePodcast, repositoryGetPodcastByName } from "../repositories/podcasts-repositories";
 import { StatusCode } from "../utils/status-code";
 
-export const serviceUpdatePodcast = async (podcastId: string, podcastData: Partial<PodcastModel>): Promise<{ statusCode: number, message: string }> => {
+export const serviceUpdatePodcast = async (podcastName: string, podcastData: Partial<PodcastModel>): Promise<{ statusCode: number, message: string }> => {
   try {
     // Validar se pelo menos um campo foi fornecido para atualização
     if (Object.keys(podcastData).length === 0) {
@@ -20,13 +20,23 @@ export const serviceUpdatePodcast = async (podcastId: string, podcastData: Parti
       };
     }
 
-    // Atualizar o podcast
-    const updated = await repositoryUpdatePodcast(podcastId, podcastData);
+    // Buscar o podcast pelo nome para obter o ID
+    const podcast = await repositoryGetPodcastByName(podcastName);
+    
+    if (!podcast) {
+      return {
+        statusCode: StatusCode.NOT_FOUND,
+        message: "Podcast não encontrado"
+      };
+    }
+
+    // Atualizar o podcast usando o ID
+    const updated = await repositoryUpdatePodcast(podcast.videoId, podcastData);
     
     if (!updated) {
       return {
         statusCode: StatusCode.NOT_FOUND,
-        message: "Podcast não encontrado"
+        message: "Erro ao atualizar o podcast"
       };
     }
 

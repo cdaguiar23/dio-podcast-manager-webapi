@@ -15,9 +15,7 @@ export const app = async (request: http.IncomingMessage, response: http.ServerRe
     if (request.method === HttpMethod.GET && baseUrl === Routes.LIST) {
         await getListEpisodes(request, response)
     } else if (request.method === HttpMethod.GET && baseUrl === Routes.EPISODE) { 
-        await getFilterEpisodes(request, response)
-    } else if (request.method === HttpMethod.GET && baseUrl?.startsWith(Routes.PODCAST_DETAILS)) { 
-        await getPodcastDetails(request, response)
+        await getFilterEpisodes(request, response) 
     } else if (request.method === HttpMethod.POST && baseUrl === Routes.CREATE) {
         await createPodcast(request, response)
     } else if (request.method === HttpMethod.PUT && baseUrl?.startsWith(Routes.PODCAST_UPDATE)) {

@@ -9,17 +9,22 @@ export const deletePodcast = async (
   res: ServerResponse
 ) => {
   try {
-    const podcastId = req.url?.split('/').pop(); // ID do podcast da URL
+    // Extrair o nome do podcast da URL (último segmento do caminho)
+    const urlParts = req.url?.split('/');
+    const podcastName = urlParts?.pop(); // Nome do podcast da URL
     
-    if (!podcastId) {
+    // Decodificar o nome do podcast (para lidar com espaços e caracteres especiais)
+    const decodedPodcastName = podcastName ? decodeURIComponent(podcastName) : '';
+    
+    if (!decodedPodcastName) {
       res.writeHead(400, defaultContent);
-      res.write(JSON.stringify({ message: "ID do podcast é obrigatório" }));
+      res.write(JSON.stringify({ message: "Nome do podcast é obrigatório" }));
       res.end();
       return;
     }
 
-    // Chamar o serviço para deletar o podcast
-    const result = await serviceDeletePodcast(podcastId);
+    // Chamar o serviço para deletar o podcast pelo nome
+    const result = await serviceDeletePodcast(decodedPodcastName);
     
     res.writeHead(result.statusCode, defaultContent);
     res.write(JSON.stringify({ message: result.message }));

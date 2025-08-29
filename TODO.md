@@ -1,39 +1,32 @@
-# TODO - Implementação de Criação de Podcasts
+# TODO: Modify Delete Podcast Functionality to Use Name Instead of ID
 
-## ✅ Etapas Concluídas:
-- [x] Criar serviço de criação de podcasts (create-podcast-service.ts)
-- [x] Adicionar função de escrita no repositório (podcasts-repositories.ts)
-- [x] Criar controller para criação de podcasts (create-podcast-controller.ts)
-- [x] Adicionar nova rota CREATE (routes.ts)
-- [x] Atualizar app.ts para incluir rota POST
+## Steps to Complete:
 
-## 🔄 Próximos Passos:
-- [ ] Testar a funcionalidade com Postman
-- [ ] Verificar se o arquivo podcasts.json é atualizado corretamente
-- [ ] Testar validações de dados
+1. [x] Update `src/repositories/podcasts-repositories.ts`:
+   - Add `repositoryDeletePodcastByName` function to delete by name
+   - Keep existing `repositoryDeletePodcast` for backward compatibility if needed
 
-## 📋 Como Testar com Postman:
+2. [x] Update `src/services/delete-podcast-service.ts`:
+   - Change parameter from `podcastId` to `podcastName`
+   - Update validation messages to reference name
+   - Call new repository function for name-based deletion
 
-1. **Iniciar o servidor:**
-   ```bash
-   npm run dev
-   ```
+3. [x] Update `src/controllers/delete-podcast-controller.ts`:
+   - Change URL parsing to extract podcast name instead of ID
+   - Update error messages to reference name instead of ID
+   - Add URL decoding for podcast names with special characters
 
-2. **Configurar requisição POST no Postman:**
-   - URL: `http://localhost:3000/api/podcasts/create`
-   - Method: POST
-   - Headers: `Content-Type: application/json`
-   - Body (raw JSON):
-   ```json
-   {
-     "podcastName": "nome-do-podcast",
-     "episode": "Nome do Episódio",
-     "videoId": "abc123",
-     "categories": ["categoria1", "categoria2"]
-   }
-   ```
+4. [x] Update `README.md`:
+   - Update documentation to reflect name-based deletion instead of ID-based
 
-3. **Respostas esperadas:**
-   - Sucesso (201): `{"message": "Podcast criado com sucesso"}`
-   - Erro de validação (400): `{"message": "Campos obrigatórios: podcastName, episode e videoId"}`
-   - Erro interno (500): `{"message": "Erro interno do servidor"}`
+5. [ ] Test the functionality:
+   - Verify deletion works with podcast names
+   - Test error handling for non-existent names
+   - Check URL encoding/decoding
+
+## Completed:
+- [x] Plan created and approved
+- [x] Repository function `repositoryDeletePodcastByName` added
+- [x] Service updated to use podcast name instead of ID
+- [x] Controller updated to extract and decode podcast name from URL
+- [x] README documentation updated

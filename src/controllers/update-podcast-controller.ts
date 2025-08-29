@@ -18,18 +18,18 @@ export const updatePodcast = async (
 
     req.on('end', async () => {
       try {
-        const podcastId = req.url?.split('/').pop(); // ID do podcast da URL
+        const podcastName = req.url?.split('/').pop(); // Nome do podcast da URL
         const updateData = JSON.parse(body);
         
-        if (!podcastId) {
+        if (!podcastName) {
           res.writeHead(400, defaultContent);
-          res.write(JSON.stringify({ message: "ID do podcast é obrigatório" }));
+          res.write(JSON.stringify({ message: "Nome do podcast é obrigatório" }));
           res.end();
           return;
         }
 
-        // Chamar o serviço para atualizar o podcast
-        const result = await serviceUpdatePodcast(podcastId, updateData);
+        // Chamar o serviço para atualizar o podcast usando o nome
+        const result = await serviceUpdatePodcast(podcastName, updateData);
         
         res.writeHead(result.statusCode, defaultContent);
         res.write(JSON.stringify({ message: result.message }));

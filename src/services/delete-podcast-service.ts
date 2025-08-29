@@ -1,17 +1,17 @@
-import { repositoryDeletePodcast } from "../repositories/podcasts-repositories";
+import { repositoryDeletePodcastByName } from "../repositories/podcasts-repositories";
 import { StatusCode } from "../utils/status-code";
 
-export const serviceDeletePodcast = async (podcastId: string): Promise<{ statusCode: number, message: string }> => {
+export const serviceDeletePodcast = async (podcastName: string): Promise<{ statusCode: number, message: string }> => {
   try {
-    if (!podcastId) {
+    if (!podcastName) {
       return {
         statusCode: StatusCode.BAD_REQUEST,
-        message: "ID do podcast é obrigatório"
+        message: "Nome do podcast é obrigatório"
       };
     }
 
-    // Deletar o podcast
-    const deleted = await repositoryDeletePodcast(podcastId);
+    // Deletar o podcast pelo nome
+    const deleted = await repositoryDeletePodcastByName(podcastName);
     
     if (!deleted) {
       return {

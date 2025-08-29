@@ -1,6 +1,6 @@
 # API de Podcasts em Node.js
 
-Este é um projeto de API RESTful construído com Node.js e TypeScript, focado em fornecer endpoints para listar e filtrar episódios de podcasts. A aplicação foi desenvolvida seguindo uma arquitetura modular e utilizando as melhores práticas de desenvolvimento para garantir um código limpo, organizado e escalável.
+Este é um projeto de API RESTful construído em Node.js e TypeScript, focado em fornecer endpoints para listar e filtrar episódios de podcasts. A aplicação foi desenvolvida seguindo uma arquitetura modular e utilizando as melhores práticas de desenvolvimento para garantir um código limpo, organizado e escalável.
 
 ## ✨ Funcionalidades
 
@@ -9,7 +9,6 @@ Este é um projeto de API RESTful construído com Node.js e TypeScript, focado e
 - **Criação de Podcast**: Endpoint para criar um novo podcast.
 - **Atualização de Podcast**: Endpoint para atualizar um podcast existente.
 - **Deleção de Podcast**: Endpoint para deletar um podcast existente.
-- **Detalhes do Podcast**: Endpoint para obter detalhes de um podcast específico.
 - **Arquitetura Modular**: O código é organizado em camadas de `Controllers`, `Services` e `Repositories`, facilitando a manutenção e a extensibilidade.
 - **Tratamento de Respostas**: A API retorna códigos de status HTTP adequados (`200 OK` para sucesso, `204 No Content` para buscas sem resultado).
 
@@ -26,7 +25,7 @@ O projeto segue uma estrutura de diretórios que separa as responsabilidades da 
 ```
 /src
 |-- /controllers       # Camada responsável por receber as requisições e enviar as respostas.
-|-- /models            # Contém os modelos e tipos de dados da aplicação.
+|-- /models            # Contém os modelos e tipos de dados da applicação.
 |-- /repositories      # Camada de acesso aos dados (neste caso, o arquivo .json).
 |-- /routes            # Define as rotas da API e as associa aos controllers.
 |-- /services          # Contém a lógica de negócio da aplicação.
@@ -81,7 +80,7 @@ A API possui os seguintes endpoints:
 
 ### 2. Filtrar podcasts por nome
 
-- **URL**: `/api/podcasts?p=<nome_do_podcast>`
+- **极客时间URL**: `/api/podcasts?p=<nome_do_podcast>`
 - **Método**: `GET`
 - **Descrição**: Retorna uma lista de episódios de podcast que correspondem ao nome fornecido no parâmetro `p`.
 - **Exemplo de Uso**:
@@ -109,7 +108,8 @@ A API possui os seguintes endpoints:
   {
     "podcastName": "Novo Podcast",
     "episode": "Episódio 1",
-    "videoId": "123456"
+    "videoId": "123456",
+    "categories": ["categoria1", "categoria2"]
   }
   ```
 - **Exemplo de Resposta (Sucesso `201 Created`):**
@@ -121,49 +121,47 @@ A API possui os seguintes endpoints:
 
 ### 4. Atualizar um podcast existente
 
-- **URL**: `/api/podcast/<id>`
+- **URL**: `/api/podcast/<nome_do_podcast>`
 - **Método**: `PUT`
-- **Descrição**: Atualiza os dados de um podcast existente com o ID fornecido na URL.
+- **Descrição**: Atualiza os dados de um podcast existente usando o nome do podcast na URL. A API busca automaticamente o ID correspondente ao nome fornecido.
 - **Exemplo de Requisição:**
   ```json
   {
-    "podcastName": "Podcast Atualizado",
     "episode": "Episódio Atualizado",
-    "videoId": "654321"
+    "categories": ["tecnologia", "programação"]
   }
   ```
+- **Exemplo de Uso**:
+  - `PUT /api/podcast/MeuPodcastFavorito`
 - **Exemplo de Resposta (Sucesso `200 OK`):**
   ```json
   {
     "message": "Podcast atualizado com sucesso!"
   }
   ```
+- **Resposta de Erro (Podcast não encontrado `404 Not Found`):**
+  ```json
+  {
+    "message": "Podcast não encontrado"
+  }
+  ```
 
 ### 5. Deletar um podcast
 
-- **URL**: `/api/podcast/<id>`
+- **URL**: `/api/podcast/<nome_do_podcast>`
 - **Método**: `DELETE`
-- **Descrição**: Deleta um podcast existente com o ID fornecido na URL.
+- **Descrição**: Deleta um podcast existente com o nome fornecido na URL. A API busca automaticamente o podcast pelo nome e o remove.
+- **Exemplo de Uso**:
+  - `DELETE /api/podcast/MeuPodcastFavorito`
 - **Exemplo de Resposta (Sucesso `200 OK`):**
   ```json
   {
     "message": "Podcast deletado com sucesso!"
   }
   ```
-
-### 6. Obter detalhes de um podcast
-
-- **URL**: `/api/podcast/<id>`
-- **Método**: `GET`
-- **Descrição**: Retorna os detalhes de um podcast específico com o ID fornecido na URL.
-- **Exemplo de Resposta (Sucesso `200 OK`):**
+- **Resposta de Erro (Podcast não encontrado `404 Not Found`):**
   ```json
   {
-    "podcastName": "Flow",
-    "episode": "Igor 3K - A Realidade por Trás dos Estúdios",
-    "videoId": "12345"
+    "message": "Podcast não encontrado"
   }
   ```
-
----
-*Este README foi gerado com o auxílio do Gemini AI.*
